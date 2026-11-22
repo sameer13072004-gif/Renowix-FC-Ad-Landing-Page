@@ -2412,6 +2412,8 @@
     /* =========================================================================
        3. INTERACTIVE ROOM COST ESTIMATOR
        ========================================================================= */
+    let includeEstimatorSpecs = false;
+
     const estimatorState = {
       area: 180,
       system: 'Gypsum',
@@ -2499,6 +2501,7 @@
     // Send Estimate to Form CTA Button
     const btnUseEstimate = document.getElementById('btn-use-estimate');
     btnUseEstimate.addEventListener('click', () => {
+      includeEstimatorSpecs = true;
       const summaryText = `${estimatorState.area} sq.ft • ${estimatorState.system} • ${estimatorState.depthName} (Est: ₹${estimatorState.lowEstimate.toLocaleString('en-IN')} – ₹${estimatorState.highEstimate.toLocaleString('en-IN')})`;
 
       // Reveal summary pill in form
@@ -2595,8 +2598,10 @@
       const selectedTypeEl = document.querySelector('input[name="ceiling_type"]:checked');
       const ceilingType = selectedTypeEl ? selectedTypeEl.value : 'Gypsum Ceiling';
 
-      // Check if estimator was active/viewed
-      const estimatorDetails = `Area: ${estimatorState.area} sq.ft, System: ${estimatorState.system}, Design: ${estimatorState.depthName}, Range: ₹${estimatorState.lowEstimate.toLocaleString('en-IN')} - ₹${estimatorState.highEstimate.toLocaleString('en-IN')}`;
+      // Only include estimator specs if user explicitly clicked the estimator CTA
+      const estimatorDetails = includeEstimatorSpecs
+        ? `Area: ${estimatorState.area} sq.ft, System: ${estimatorState.system}, Design: ${estimatorState.depthName}, Range: ₹${estimatorState.lowEstimate.toLocaleString('en-IN')} - ₹${estimatorState.highEstimate.toLocaleString('en-IN')}`
+        : '';
 
       // Extract UTM parameters
       const urlParams = new URLSearchParams(window.location.search);

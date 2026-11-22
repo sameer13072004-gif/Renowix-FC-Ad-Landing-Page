@@ -615,16 +615,18 @@
           snapBox.style.display = 'flex';
           snapSector.textContent = lead.sector || 'Noida';
           snapType.textContent = lead.ceilingType || 'Gypsum / POP';
-          if (lead.estimatorDetails && !lead.estimatorDetails.includes('Not used')) {
+          if (lead.estimatorDetails && lead.estimatorDetails.trim() !== '') {
             snapRoomRow.style.display = 'flex';
             snapRoom.textContent = lead.estimatorDetails;
+          } else {
+            snapRoomRow.style.display = 'none';
           }
         }
 
-        // Build pre-filled WhatsApp text
+        // Build pre-filled WhatsApp text: ONLY include Estimator Specs if non-empty
         let detailsPart = '';
-        if (lead.estimatorDetails && !lead.estimatorDetails.includes('Not used')) {
-          detailsPart = `\n• Estimator Specs: ${lead.estimatorDetails}`;
+        if (lead.estimatorDetails && lead.estimatorDetails.trim() !== '') {
+          detailsPart = `\n• Estimator Specs: ${lead.estimatorDetails.trim()}`;
         }
 
         whatsappMessage = `Hi Renowix, I just requested a false ceiling estimate for Noida:
